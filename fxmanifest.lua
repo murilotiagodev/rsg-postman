@@ -10,7 +10,7 @@ version '3.2.0'
 shared_script 'config.lua'
 
 client_scripts {
-    '@ox_lib/init.lua',   -- OBLIGATORIU înainte de client.lua
+    '@ox_lib/init.lua',   -- before client.lua
     'client.lua'
 }
 
