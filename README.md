@@ -4,7 +4,7 @@ A fully-featured **Postman Delivery Job** for [RSG Core](https://github.com/RedE
 
 Players can work as a postman, collect packages from an NPC, deliver them around Saint Denis (or any configured town), earn money, and return unused packages.
 
----
+---VIDEO  https://medal.tv/games/red-dead-2/clips/kZqZrxdK3FfXhZXQC?invite=cr-MSxDZ1osMjI4MTc2ODAw&v=121
 
 ## ✨ Features
 
