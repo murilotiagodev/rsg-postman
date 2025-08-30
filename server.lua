@@ -12,7 +12,7 @@ end
 
 local function Notify(src, description, ntype, duration)
     TriggerClientEvent('rsg-postman:notify', src, {
-        title = 'Postman',
+        title = 'Carteiro',
         description = description,
         type = ntype or 'inform',
         duration = duration or 4000
@@ -35,27 +35,27 @@ RegisterNetEvent('rsg-postman:startJob', function(amount)
 
     -- verifică itemul în RSGCore.Shared.Items (pentru rsg-inventory)
     if not (RSGCore.Shared and RSGCore.Shared.Items and RSGCore.Shared.Items[itemName]) then
-        Notify(src, ("Item '%s' is not defined in RSGCore.Shared.Items."):format(itemName), "error")
-        print(('[rsg-postman] ERROR: item %s missing in RSGCore.Shared.Items'):format(itemName))
+        Notify(src, ("Item '%s' não está definido em RSGCore.Shared.Items."):format(itemName), "error")
+        print(('[rsg-postman] ERRO: item %s ausente em RSGCore.Shared.Items'):format(itemName))
         return
     end
 
     if not GiveItem(Player, itemName, amount) then
-        Notify(src, "No inventory space or item undefined.", "error")
-        print(('[rsg-postman] AddItem FAILED for %d (%dx %s)'):format(src, amount, itemName))
+        Notify(src, "Sem espaço no inventário ou item indefinido.", "error")
+        print(('[rsg-postman] AddItem FALHOU para %d (%dx %s)'):format(src, amount, itemName))
         return
     end
 
     -- anim ItemBox (rsg-inventory)
     TriggerClientEvent('rsg-inventory:client:ItemBox', src, RSGCore.Shared.Items[itemName], 'add')
 
-    -- setează câte pachete mai are
+    -- define quantos pacotes o jogador tem
     Player.Functions.SetMetaData("postman_packages", amount)
 
-    -- prima destinație
+    -- primeira entrega
     local locs = Config.DeliveryLocations or {}
     if #locs == 0 then
-        Notify(src, "No delivery locations configured.", "error")
+        Notify(src, "Nenhuma localização de entrega configurada.", "error")
         return
     end
 
@@ -67,7 +67,7 @@ RegisterNetEvent('rsg-postman:startJob', function(amount)
     if deliverNow > amount then deliverNow = amount end
 
     TriggerClientEvent('rsg-postman:setDelivery', src, location, deliverNow)
-    Notify(src, ("You received %d %s. First delivery assigned."):format(amount, itemName), "success")
+    Notify(src, ("Você recebeu %d %s. Primeira entrega designada."):format(amount, itemName), "success")
 end)
 
 -- ===== COMPLETE DELIVERY =====
@@ -83,30 +83,30 @@ RegisterNetEvent('rsg-postman:completeDelivery', function(delivered)
     local packagesLeft = Player.PlayerData.metadata["postman_packages"] or 0
 
     if packagesLeft <= 0 then
-        Notify(src, "You have no packages left.", "error")
+        Notify(src, "Você não tem mais pacotes.", "error")
         return
     end
     if delivered > packagesLeft then delivered = packagesLeft end
 
-    -- verifică în inventar dacă are destule
+    -- verifica inventário
     local invItem = Player.Functions.GetItemByName(itemName)
     local have = invItem and invItem.amount or 0
     if have < delivered then
-        Notify(src, "Not enough packages on you.", "error")
+        Notify(src, "Você não tem pacotes suficientes com você.", "error")
         return
     end
 
-    -- scoate pachetele livrate
+    -- remove pacotes entregues
     RemoveItem(Player, itemName, delivered)
     TriggerClientEvent('rsg-inventory:client:ItemBox', src, RSGCore.Shared.Items[itemName], 'remove')
 
-    -- plătește
+    -- pagamento
     local payPer = Config.PayPerPackage or 5
     local pay = delivered * payPer
     Player.Functions.AddMoney('cash', pay, "postman-job")
-    Notify(src, ("You received $%d for %d packages."):format(pay, delivered), "success")
+    Notify(src, ("Você recebeu $%d por %d pacotes."):format(pay, delivered), "success")
 
-    -- update meta și următoarea rută
+    -- atualiza meta e próxima entrega
     packagesLeft = packagesLeft - delivered
     Player.Functions.SetMetaData("postman_packages", packagesLeft)
 
@@ -116,7 +116,7 @@ RegisterNetEvent('rsg-postman:completeDelivery', function(delivered)
             Wait(delay + 0)
             local locs = Config.DeliveryLocations or {}
             if #locs == 0 then
-                Notify(src, "No delivery locations configured.", "error")
+                Notify(src, "Nenhuma localização de entrega configurada.", "error")
                 return
             end
             local location = locs[math.random(1, #locs)]
@@ -126,10 +126,10 @@ RegisterNetEvent('rsg-postman:completeDelivery', function(delivered)
             local deliverNow = math.random(minPer, maxPer)
             if deliverNow > packagesLeft then deliverNow = packagesLeft end
             TriggerClientEvent('rsg-postman:setDelivery', src, location, deliverNow)
-            Notify(src, "Next delivery assigned.", "inform")
+            Notify(src, "Próxima entrega designada.", "inform")
         end)
     else
-        Notify(src, "All deliveries completed. Good job!", "success")
+        Notify(src, "Todas as entregas concluídas. Bom trabalho!", "success")
     end
 end)
 
@@ -151,5 +151,5 @@ RegisterNetEvent('rsg-postman:stopJob', function()
     end
 
     Player.Functions.SetMetaData("postman_packages", 0)
-    Notify(src, "You returned all undelivered packages.", "inform")
+    Notify(src, "Você devolveu todos os pacotes não entregues.", "inform")
 end)
