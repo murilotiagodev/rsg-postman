@@ -1,52 +1,50 @@
 # 📦 RSG Postman Job
 
-A fully-featured **Postman Delivery Job** for [RSG Core](https://github.com/RedEM-RP/rsg-core) on **RedM**, using **ox_lib**, **ox_target** and **rsg-inventory**.
+Creditos @silentsound12
 
-Players can work as a postman, collect packages from an NPC, deliver them around Saint Denis (or any configured town), earn money, and return unused packages.
+Um **trabalho completo de Carteiro/Entregador** para [RSG Core](https://github.com/RedEM-RP/rsg-core) no **RedM**, utilizando **ox_lib**, **ox_target** e **rsg-inventory**.  
 
----VIDEO  https://medal.tv/games/red-dead-2/clips/kZqZrxdK3FfXhZXQC?invite=cr-MSxDZ1osMjI4MTc2ODAw&v=121
+Os jogadores podem trabalhar como carteiro, coletar pacotes de um NPC, entregá-los em locais aleatórios (Saint Denis ou qualquer cidade configurada), ganhar dinheiro e devolver pacotes não utilizados.  
 
-## ✨ Features
+🎥 **Vídeo de Demonstração:** [Clique aqui](https://medal.tv/games/red-dead-2/clips/kZqZrxdK3FfXhZXQC?invite=cr-MSxDZ1osMjI4MTc2ODAw&v=121)
 
-- 🧍‍♂️ **NPC Interaction** via **ox_target**  
-- 📦 **Physical `package` item** in `rsg-inventory`  
-- 📍 **Random delivery locations** (configurable)  
-- 🚶 **Progress bars** on deliver & return (ox_lib)  
-- 🎬 **Delivery animation** (`handover_money` animscene)  
-- ⏱️ **Configurable delay** between deliveries  
-- ❌ **Stop Deliveries option** – return all packages to NPC  
-- 🗺️ **Waypoint & blip** for each delivery destination  
-- 🔔 **All notifications** via **ox_lib**  
-
-
-🕹️ Usage
-
-Approach the Postman NPC (blip on map).
-
-Interact (E key via ox_target):
-
-Take packages (choose amount, up to 50).
-
-Stop Deliveries (return unused packages).
-
-Follow blip/waypoint to random delivery address.
-
-Press E at destination to hand over package (with animation).
-
-Get paid in cash.
-
-Wait a short delay, then receive your next delivery location.
-
-Continue until all packages are delivered, or stop at NPC.
 ---
 
-## 📂 Installation
+## ✨ Recursos
 
-1. Clone or download this resource into your RedM server’s `resources` folder:  
+- 🧍‍♂️ **Interação com NPC** via **ox_target**  
+- 📦 **Item físico `package`** no **rsg-inventory**  
+- 📍 **Locais de entrega aleatórios** (configuráveis)  
+- 🚶 **Barras de progresso** em entregas e devoluções (ox_lib)  
+- 🎬 **Animação de entrega** (`handover_money` animscene)  
+- ⏱️ **Atraso configurável** entre entregas  
+- ❌ **Opção de parar entregas** – devolver todos os pacotes ao NPC  
+- 🗺️ **Blip e waypoint** para cada destino  
+- 🔔 **Todas notificações** via **ox_lib**  
+
+---
+
+## 🕹️ Como Jogar
+
+1. Vá até o NPC Carteiro (blip no mapa).  
+2. Interaja com **E (ox_target)**:  
+   - **Pegar Pacotes** (escolha a quantidade, até 50).  
+   - **Parar Entregas** (devolve pacotes restantes).  
+3. Siga o blip/waypoint até o endereço aleatório.  
+4. Pressione **E** no destino para entregar o pacote (com animação).  
+5. Receba o pagamento em dinheiro.  
+6. Aguarde um curto intervalo para receber o próximo destino.  
+7. Continue até entregar todos os pacotes ou encerrar no NPC.  
+
+---
+
+## 📂 Instalação
+
+1. Baixe ou clone o recurso na pasta `resources` do seu servidor RedM:  
    ```bash
    resources/[jobs]/rsg-postman
 add item in your rsg-core shared items 
-    package       = { name = 'package',       label = 'Pachet',       weight = 1, type = 'item', image = 'package.png',       unique = true, useable = true, shouldClose = true, description = 'Pachet Livrare' },
+    package       = { name = 'package',       label = 'Caixa de Entrega',       weight = 1, type = 'item', image = 'package.png',       unique = true, useable = true, shouldClose = true, description = 'Caixa de Entrega' },
 
 Dependencies
 
